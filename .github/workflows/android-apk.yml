@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
     paths:
-      - "frontend/**"
+      - "osca-voice-assistant-v2/frontend/**"
       - ".github/workflows/android-apk.yml"
   pull_request:
     paths:
-      - "frontend/**"
+      - "osca-voice-assistant-v2/frontend/**"
       - ".github/workflows/android-apk.yml"
 
 jobs:
@@ -19,18 +19,19 @@ jobs:
 
     defaults:
       run:
-        working-directory: frontend
+        # This tells every 'run' step to start inside your app folder
+        working-directory: osca-voice-assistant-v2/frontend
 
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.10"
           cache: pip
-          cache-dependency-path: frontend/requirements.txt
+          cache-dependency-path: osca-voice-assistant-v2/frontend/requirements.txt
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -42,35 +43,24 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            autoconf \
-            build-essential \
-            git \
-            libbz2-dev \
-            libffi-dev \
-            libgdbm-dev \
-            liblzma-dev \
-            libncurses5-dev \
-            libncursesw5-dev \
-            libreadline-dev \
-            libsqlite3-dev \
-            libssl-dev \
-            pkg-config \
-            tk-dev \
-            unzip \
-            zip \
-            zlib1g-dev
+            autoconf build-essential git libbz2-dev libffi-dev \
+            libgdbm-dev liblzma-dev libncurses5-dev libncursesw5-dev \
+            libreadline-dev libsqlite3-dev libssl-dev pkg-config \
+            tk-dev unzip zip zlib1g-dev
 
       - name: Install Buildozer tooling
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install buildozer cython
+          python -m pip install "buildozer==1.5.0" "cython==0.29.33"
 
       - name: Build debug APK
-        run: buildozer -v android debug
+        # We use 'yes |' to automatically accept SDK licenses during the build
+        run: yes | buildozer -v android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: ikalinga-debug-apk
-          path: frontend/bin/*.apk
+          # Since the working-directory is already frontend, we look in bin/
+          path: osca-voice-assistant-v2/frontend/bin/*.apk
           if-no-files-found: error
