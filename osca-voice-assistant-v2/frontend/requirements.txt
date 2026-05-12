@@ -1,0 +1,36 @@
+# iKalinga Frontend Requirements - Updated for Android Build
+# Voice-Activated Appointment System - Kivy Mobile App
+
+# Kivy Framework
+kivy==2.3.0
+kivy-garden==0.1.5
+
+# Voice & Audio
+# NOTE: pyaudio and pyttsx3 are difficult to compile for Android.
+# SpeechRecognition remains, but usually requires jnius to talk to Android's native intent.
+SpeechRecognition==3.10.0
+pydub==0.25.1
+# Use plyer for text-to-speech and other hardware features on Android
+plyer==2.1.0 
+
+# Google Cloud APIs
+google-cloud-speech==2.21.0
+google-cloud-texttospeech==2.14.1
+google-auth==2.22.0
+
+# SMS Services
+twilio==8.10.0
+infobip-api-python==2.0.1
+
+# HTTP & API Communication
+requests==2.31.0
+python-dotenv==1.0.0
+certifi  # Essential for SSL/HTTPS requests on Android
+
+# Utilities
+pytz==2023.3
+python-dateutil==2.8.2
+
+# Build Support
+# Required for many Kivy-based Android builds
+cython==0.29.33
