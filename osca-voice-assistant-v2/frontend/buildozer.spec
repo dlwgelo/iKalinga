@@ -5,7 +5,7 @@ package.domain = org.ikalinga
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
-requirements = python3, kivy==2.3.0, SpeechRecognition, pydub, google-cloud-speech, google-cloud-texttospeech, twilio, infobip-api-python, requests, python-dotenv, pytz, python-dateutil, plyer, certifi
+requirements = python3,kivy==2.3.0,requests,certifi,plyer,pydub,setuptools,pytz,python-dateutil
 orientation = portrait
 fullscreen = 0
 icon.filename = %(source.dir)s/icon.png
